@@ -1,6 +1,7 @@
 # Pull depenencies
 ```zsh
 npm install
+npx electron-forge import
 ```
 # Run app in dev
 ```zsh
