@@ -22,6 +22,8 @@ function appendMessage(message: Node, container: HTMLElement, containerEnd: HTML
 
 export function getMessages(container: HTMLElement, containerEnd: HTMLElement) {
   for (let i = 0; i < 11; i++) {
-    appendMessage(createMessage(`user ${i}`, new Date(), `hello ${i}`), container, containerEnd);
+    setTimeout(() => {
+      appendMessage(createMessage(`user ${i}`, new Date(), `hello ${i}`), container, containerEnd);
+    }, 3000 * i);
   }
 }
