@@ -1,0 +1,6 @@
+# ninja log v5
+0	401	6687294755563587	server/CMakeFiles/server.dir/server.cpp.obj	e203b1be0ee75a59
+402	643	6687294757878565	server/server.exe	2ef992df0a520c25
+4	70	6687297886078138	server/CMakeFiles/server.dir/something.cpp.obj	85913bc5b6270934
+0	418	6687297889558139	server/CMakeFiles/server.dir/server.cpp.obj	e203b1be0ee75a59
+419	578	6687297890843128	server/server.exe	bc145a78744ecfa8

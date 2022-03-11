@@ -1,0 +1,5 @@
+E:/ift611_tp/server/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+E:/ift611_tp/server/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+E:/ift611_tp/server/out/build/x64-Debug/server/CMakeFiles/server.dir
+E:/ift611_tp/server/out/build/x64-Debug/server/CMakeFiles/edit_cache.dir
+E:/ift611_tp/server/out/build/x64-Debug/server/CMakeFiles/rebuild_cache.dir
