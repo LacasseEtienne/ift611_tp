@@ -1,0 +1,89 @@
+$chat-bg: #36393E;
+$message-hover-bg: #1e21249c;
+$users-bg: #1E2124;
+
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  margin: auto;
+  height: 100%;
+}
+
+.container
+{
+	height: 100%;
+	display: flex;
+}
+
+.chat
+{
+	background: $chat-bg;
+	flex: 1;
+	flex-direction: column;
+  color: whitesmoke;
+  padding: 1rem 0;
+	display: flex;
+
+	.messages
+	{
+		list-style: none;
+		padding: 0;
+		overflow-y: auto;
+		flex: 1;
+
+		.message-container
+		{
+			margin-bottom: 1rem;
+
+			padding: 1rem;
+
+			.date
+			{
+				margin-left: 0.5rem;
+				font-size: x-small;
+				color: gray;
+				margin-top: auto;
+			}
+
+			.message
+			{
+				margin-top: 0.5rem;
+			}
+		}
+
+		.message-container:hover
+		{
+			background-color: $message-hover-bg;
+		}
+	}
+
+	.text-area
+	{
+		display: flex;
+		.text-area-input
+		{
+			margin: 1rem;
+			flex: 1;
+		}
+	}
+}
+
+.users
+{
+	background: $users-bg;
+	flex: 0 0 16rem;
+	flex-direction: column;
+  color: lightgrey;
+  overflow-y: auto;
+  padding: 1rem 0;
+
+  ul
+		{
+			list-style: none;
+		}
+}
+
+.display-flex
+{
+	display: flex;
+}
