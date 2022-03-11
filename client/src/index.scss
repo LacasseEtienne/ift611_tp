@@ -26,34 +26,38 @@ html, body {
 
 	.messages
 	{
-		list-style: none;
-		padding: 0;
 		overflow-y: auto;
 		flex: 1;
 
-		.message-container
+		ul
 		{
-			margin-bottom: 1rem;
+			list-style: none;
+			padding: 0;
 
-			padding: 1rem;
-
-			.date
+			.message-container
 			{
-				margin-left: 0.5rem;
-				font-size: x-small;
-				color: gray;
-				margin-top: auto;
+				margin-bottom: 1rem;
+	
+				padding: 1rem;
+	
+				.date
+				{
+					margin-left: 0.5rem;
+					font-size: x-small;
+					color: gray;
+					margin-top: auto;
+				}
+	
+				.message
+				{
+					margin-top: 0.5rem;
+				}
 			}
 
-			.message
+			.message-container:hover
 			{
-				margin-top: 0.5rem;
+				background-color: $message-hover-bg;
 			}
-		}
-
-		.message-container:hover
-		{
-			background-color: $message-hover-bg;
 		}
 	}
 
