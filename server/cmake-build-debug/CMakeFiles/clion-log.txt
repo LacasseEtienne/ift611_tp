@@ -1,11 +1,4 @@
 "C:\Program Files\JetBrains\CLion 2021.3.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2021.3.3/bin/ninja/win/ninja.exe" -G Ninja E:\ift611_tp\server
-CMake Error at C:/Program Files/JetBrains/CLion 2021.3.3/bin/cmake/win/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
-  Could NOT find Boost (missing: Boost_INCLUDE_DIR)
-Call Stack (most recent call first):
-  C:/Program Files/JetBrains/CLion 2021.3.3/bin/cmake/win/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake:594 (_FPHSA_FAILURE_MESSAGE)
-  C:/Program Files/JetBrains/CLion 2021.3.3/bin/cmake/win/share/cmake-3.21/Modules/FindBoost.cmake:2345 (find_package_handle_standard_args)
-  CMakeLists.txt:9 (find_package)
-
-
--- Configuring incomplete, errors occurred!
-See also "E:/ift611_tp/server/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+-- Configuring done
+-- Generating done
+-- Build files have been written to: E:/ift611_tp/server/cmake-build-debug

@@ -66,7 +66,7 @@ build CMakeFiles/server.dir/main.cpp.obj: CXX_COMPILER__server_Debug E$:/ift611_
 
 build server.exe: CXX_EXECUTABLE_LINKER__server_Debug CMakeFiles/server.dir/main.cpp.obj
   FLAGS = -g
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -lws2_32  -lwsock32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\server.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
