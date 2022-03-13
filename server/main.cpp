@@ -193,7 +193,7 @@ private:
 auto checkCommandLineArguments(int argc){
     if (argc != 4) {
         std::cerr << "Usage: websocket-server-async <address> <port> <threads>\n" << "Example:\n"
-                  << "    websocket-server-async 0.0.0.0 8080 1\n";
+                  << "    websocket-server-async 127.0.0.1 8080 1\n";
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;

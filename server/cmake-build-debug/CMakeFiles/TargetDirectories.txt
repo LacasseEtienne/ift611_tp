@@ -1,3 +1,0 @@
-/Users/touriste/Documents/udes/hiver2022/ift611_tp/server/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/touriste/Documents/udes/hiver2022/ift611_tp/server/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/touriste/Documents/udes/hiver2022/ift611_tp/server/cmake-build-debug/CMakeFiles/server.dir
