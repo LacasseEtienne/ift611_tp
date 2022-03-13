@@ -1,0 +1,4 @@
+# ninja log v5
+10	1525	6688917672212861	CMakeFiles/server.dir/main.cpp.obj	9c053e035b2fb92a
+1525	1673	6688917673662864	server.exe	37ff49b7c9fece0f
+1	602	6688956651050782	build.ninja	860aedd9cbff3b4e

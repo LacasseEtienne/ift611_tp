@@ -1,9 +1,11 @@
-﻿# CMakeList.txt : Top-level CMake project file, do global configuration
-# and include sub-projects here.
-#
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required(VERSION 3.21)
+project(server)
 
-project ("server")
+set(CMAKE_CXX_STANDARD 23)
 
-# Include sub-projects.
-add_subdirectory ("server")
+add_executable(server main.cpp)
+
+# see https://cmake.org/cmake/help/latest/module/FindBoost.html
+find_package(Boost REQUIRED)
+
+include_directories(${Boost_INCLUDE_DIR})
