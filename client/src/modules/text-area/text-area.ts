@@ -1,10 +1,9 @@
 import textAreaHTML from './text-area.html';
 import { socket } from '../websocket';
-import { user } from '../users';
 
 function onKeydown(this: HTMLInputElement, e: KeyboardEvent) {
   if (e.key === 'Enter') {
-    socket.send(JSON.stringify({ type: 'message', user: user.uuid, text: this.value }));
+    socket.send(JSON.stringify({ type: 'message', text: this.value, perf: performance.now() }));
     this.value = '';
   }
 }

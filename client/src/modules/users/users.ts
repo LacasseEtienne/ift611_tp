@@ -1,14 +1,20 @@
 import usersHtml from './users.html';
-import { v4 as uuidv4 } from 'uuid';
 import { socket } from '../websocket';
 
 function connect(this: typeof user) {
-  socket.addEventListener('message', function(event) {
+  socket.addEventListener('message', function (event) {
     const { type, users } = JSON.parse(event.data);
-    type === 'updateUsers' && replaceUsers(users);
+    type === 'updateUsers' && user.uuid && replaceUsers(users);
   });
-  socket.send(JSON.stringify({ type: 'connect', user: this.uuid }));
+  socket.send(JSON.stringify({ type: 'connect', user: this.name }));
 }
+
+socket.addEventListener('message', function (event) {
+  const { type, uuid, users } = JSON.parse(event.data);
+  if (type !== 'init') return;
+  user.uuid = uuid;
+  replaceUsers(users);
+});
 
 function replaceUsers(users: string[]) {
   const aside = document.getElementById("users");
@@ -19,14 +25,15 @@ function replaceUsers(users: string[]) {
   aside.replaceChildren(ul);
 }
 
-function createUser(user:string): Node {
+function createUser(user: string): Node {
   const li = document.createElement("li");
   li.appendChild(document.createTextNode(user));
   return li;
 }
 
 export const user = {
-  uuid: uuidv4(),
+  name: '',
+  uuid: '',
   connect,
 };
 
