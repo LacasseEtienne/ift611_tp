@@ -1,9 +1,9 @@
 import messageHTML from './message.html';
+import { socket } from '../websocket';
 
-function createMessage(user: string, date: Date, message: string): Node {
+function createMessage(user: string, message: string): Node {
   const node = document.createRange().createContextualFragment(messageHTML);
   node.getElementById('user').insertAdjacentText('beforeend', user);
-  node.getElementById('date').insertAdjacentText('beforeend', date.toLocaleDateString());
   node.getElementById('message').insertAdjacentText('beforeend', message);
 
   return node;
@@ -21,9 +21,8 @@ function appendMessage(message: Node, container: HTMLElement, containerEnd: HTML
 }
 
 export function getMessages(container: HTMLElement, containerEnd: HTMLElement) {
-  for (let i = 0; i < 11; i++) {
-    setTimeout(() => {
-      appendMessage(createMessage(`user ${i}`, new Date(), `hello ${i}`), container, containerEnd);
-    }, 3000 * i);
-  }
+  socket.addEventListener('message', function (event) {
+    const { type, user, text } = JSON.parse(event.data);
+    type === 'message' && appendMessage(createMessage(user, text), container, containerEnd);
+  });
 }
