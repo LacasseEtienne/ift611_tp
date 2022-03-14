@@ -4,10 +4,17 @@ import { socket } from '../websocket';
 function connect(this: typeof user) {
   socket.addEventListener('message', function (event) {
     const { type, users } = JSON.parse(event.data);
-    type === 'updateUsers' && replaceUsers(users);
+    type === 'updateUsers' && user.uuid && replaceUsers(users);
   });
   socket.send(JSON.stringify({ type: 'connect', user: this.name }));
 }
+
+socket.addEventListener('message', function (event) {
+  const { type, uuid, users } = JSON.parse(event.data);
+  if (type !== 'init') return;
+  user.uuid = uuid;
+  replaceUsers(users);
+});
 
 function replaceUsers(users: string[]) {
   const aside = document.getElementById("users");
@@ -26,6 +33,7 @@ function createUser(user: string): Node {
 
 export const user = {
   name: '',
+  uuid: '',
   connect,
 };
 

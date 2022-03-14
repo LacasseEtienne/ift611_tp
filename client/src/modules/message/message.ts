@@ -7,7 +7,7 @@ function createMessage(user: string, message: string): Node {
   const node = document.createRange().createContextualFragment(messageHTML);
   node.getElementById('user').insertAdjacentText('beforeend', user);
   node.getElementById('message').insertAdjacentText('beforeend', message);
-  
+
   return node;
 }
 
@@ -25,8 +25,9 @@ function appendMessage(message: Node, container: HTMLElement, containerEnd: HTML
 
 export function getMessages(container: HTMLElement, containerEnd: HTMLElement) {
   socket.addEventListener('message', function (event) {
-    const { type, user: sender, text, perf } = JSON.parse(event.data);
-    type === 'message' && appendMessage(createMessage(sender, text), container, containerEnd);
-    user.uuid === sender && checkPerf(perf);
+    const { type, name, uuid, text, perf } = JSON.parse(event.data);
+    if (type !== 'message') return;
+    appendMessage(createMessage(name, text), container, containerEnd);
+    user.uuid === uuid && checkPerf(perf);
   });
 }
