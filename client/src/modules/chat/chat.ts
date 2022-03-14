@@ -1,6 +1,6 @@
 import chatHTML from './chat.html';
-import { getMessages } from '../message'
-import { loadTextArea } from '../text-area'
+import { getMessages } from '../message';
+import { loadTextArea } from '../text-area';
 import { socket } from '../websocket';
 
 export function loadChat(parent: HTMLElement) {

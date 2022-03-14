@@ -5,7 +5,7 @@ function createMessage(user: string, message: string): Node {
   const node = document.createRange().createContextualFragment(messageHTML);
   node.getElementById('user').insertAdjacentText('beforeend', user);
   node.getElementById('message').insertAdjacentText('beforeend', message);
-
+  
   return node;
 }
 
