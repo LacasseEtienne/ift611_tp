@@ -1,6 +1,17 @@
 import WebSocket, { WebSocketServer } from 'ws';
 import { v4 as uuidv4 } from 'uuid';
 type My_ws = WebSocket.WebSocket & { name: string, uuid: string };
+import Cassandra from 'cassandra-driver';
+
+const cassandra = require('cassandra-driver');
+const client:Cassandra.Client = new cassandra.Client({
+  contactPoints: ['0.0.0.0'],
+  keyspace: 'chatroom',
+  localDataCenter: 'datacenter1',
+})
+
+client.connect();
+const insertStatement = 'INSERT INTO messages(sent_time, author, message, delay_exceeded) VALUES (now(), ?, ?, ?)';
 
 const wss = new WebSocketServer({ port: 8080 });
 
@@ -19,12 +30,12 @@ wss.on('connection', function connection(ws: My_ws) {
     if (payload.type == "message") {
       const { text, perf } = payload;
       // Add msg to db
+      client.execute(insertStatement, [ws.name, text, false], {prepare: true});      
 
       // Send msg to all
       broadcastMessage(ws.name, ws.uuid, perf, text);
     }
   });
-
   ws.on('close', function disconnect() {
     //Notify all of the update of the users
     broadcastUpdateUsers();

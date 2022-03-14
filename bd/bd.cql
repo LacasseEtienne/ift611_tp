@@ -3,13 +3,14 @@ CREATE KEYSPACE IF NOT EXISTS chatroom WITH REPLICATION = { 'class' : 'SimpleStr
 
 -- Create a table
 CREATE TABLE IF NOT EXISTS chatroom.messages (
-temps_envoi timeuuid PRIMARY KEY,
-auteur text,
+sent_time timeuuid PRIMARY KEY,
+author text,
 message text,
+delay_exceeded boolean
 );
 
 -- Insert some data
-INSERT INTO chatroom.messages (temps_envoi, auteur, message) 
-VALUES (now(), 'Étienne', 'Hello, world!');
-INSERT INTO chatroom.messages (temps_envoi, auteur, message)
-VALUES (now(), 'Benjamin', 'Goodbye');
+INSERT INTO chatroom.messages (sent_time, author, message, delay_exceeded) 
+VALUES (now(), 'Étienne', 'Hello, world!', false);
+INSERT INTO chatroom.messages (sent_time, author, message, delay_exceeded)
+VALUES (now(), 'Benjamin', 'Goodbye', false);
