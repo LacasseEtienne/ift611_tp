@@ -27,7 +27,7 @@ wss.on('connection', function connection(ws: My_ws) {
 
   ws.on('close', function disconnect() {
     //Notify all of the update of the users
-    //broadcastUpdateUsers();
+    broadcastUpdateUsers();
   })
 });
 
