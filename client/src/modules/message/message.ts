@@ -1,5 +1,7 @@
 import messageHTML from './message.html';
+import { checkPerf } from './messagePerf';
 import { socket } from '../websocket';
+import { user } from '../users';
 
 function createMessage(user: string, message: string): Node {
   const node = document.createRange().createContextualFragment(messageHTML);
@@ -20,9 +22,11 @@ function appendMessage(message: Node, container: HTMLElement, containerEnd: HTML
   scrollToBottomAfterDOMReload(containerEnd);
 }
 
+
 export function getMessages(container: HTMLElement, containerEnd: HTMLElement) {
   socket.addEventListener('message', function (event) {
-    const { type, user, text } = JSON.parse(event.data);
-    type === 'message' && appendMessage(createMessage(user, text), container, containerEnd);
+    const { type, user: sender, text, perf } = JSON.parse(event.data);
+    type === 'message' && appendMessage(createMessage(sender, text), container, containerEnd);
+    user.uuid === sender && checkPerf(perf);
   });
 }

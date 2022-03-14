@@ -57,7 +57,9 @@
                   "name": "main_window"
                 }
               ]
-            }
+            },
+            "port": 0,
+            "loggerPort": 0
           }
         ]
       ]
