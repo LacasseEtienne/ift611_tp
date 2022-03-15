@@ -1,4 +1,5 @@
 # Cassandra DB
+The DB run in a [Docker](https://www.docker.com) and use the official [Cassandra Image](https://hub.docker.com/_/cassandra).
 
 ## Install
 ```shell
