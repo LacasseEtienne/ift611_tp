@@ -19,7 +19,7 @@ Please note that the **server** folder is an echo Websocket server written in C+
 ## Cassandra DB
 The DB reside in the **bd** folder.
 
-The [documentation](/bd/) of this part is in the folder.
+The [documentation](/database/) of this part is in the folder.
 
 ## Client
 The client reside in the **client** folder.
