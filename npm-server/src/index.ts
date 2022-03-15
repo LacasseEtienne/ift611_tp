@@ -11,7 +11,8 @@ const client:Cassandra.Client = new cassandra.Client({
 })
 
 client.connect();
-const insertStatement = 'INSERT INTO messages(sent_time, author, message, delay_exceeded) VALUES (now(), ?, ?, ?)';
+const insertStatement = 'INSERT INTO messages(id, time_sent, author, message, delay_exceeded) VALUES (?, ?, ?, ?, ?)';
+const writingUsers: string[] = [];
 
 const wss = new WebSocketServer({ port: 8080 });
 
@@ -19,7 +20,7 @@ wss.on('connection', function connection(ws: My_ws) {
   ws.uuid = uuidv4();
 
   ws.on('message', function echo(data: Buffer) {
-    const payload = getJsonFromData(data);
+    const payload = getObjectFromJsonData(data);
 
     if (payload.type == "connect") {
       ws.name = payload.user;
@@ -30,11 +31,28 @@ wss.on('connection', function connection(ws: My_ws) {
     if (payload.type == "message") {
       const { text, perf } = payload;
       // Add msg to db
-      client.execute(insertStatement, [ws.name, text, false], {prepare: true});      
-
-      // Send msg to all
-      broadcastMessage(ws.name, ws.uuid, perf, text);
+      const messageID = uuidv4();
+      const messageTime = Date.now();
+      client.execute(insertStatement, [messageID, messageTime, ws.name, text, false], {prepare: true});
+      broadcastMessage(ws.name, messageID, perf, text, messageTime);
     }
+
+    if (payload.type == "writing") {
+      if (writingUsers.includes(ws.name)) {
+        return;
+      }
+      writingUsers.push(ws.name);
+      broadcastWritingUsers();
+    }
+
+    if (payload.type == "stopWriting") {
+      const index = writingUsers.indexOf(ws.name);
+      if (index > -1) {
+        writingUsers.splice(index, 1);
+        broadcastWritingUsers();
+      }
+    }
+
   });
   ws.on('close', function disconnect() {
     //Notify all of the update of the users
@@ -52,12 +70,31 @@ function broadcastUpdateUsers() {
   });
 }
 
-function broadcastMessage(name: string, uuid: string, perf: number, text: string) {
+function broadcastMessage(name: string, uuid: string, perf: number, text: string, messageTime:number) {
   wss.clients.forEach((connection: My_ws) => {
-    connection.send(JSON.stringify({ type: 'message', name, uuid, perf, text: text }))
+    connection.send(JSON.stringify({ type: 'message', name, uuid, perf, text, messageTime }));
   })
 }
 
-function getJsonFromData(data: Buffer) {
+function broadcastWritingUsers() {
+  wss.clients.forEach((connection: My_ws) => {
+    connection.send(JSON.stringify({ type: 'updateWriting', message: generateWritingMessage(connection.name) }));
+  });
+}
+
+function generateWritingMessage(name:string) {
+  const otherUsers = writingUsers.filter(u => u !== name);
+  if (otherUsers.length == 0) {
+    return "";
+  } else if (otherUsers.length == 1) {
+    return `${otherUsers[0]} is typing...`;
+  } else if (otherUsers.length == 2) {
+    return `${otherUsers[0]} and ${otherUsers[1]} are typing...`;
+  } else {
+    return `${otherUsers.length} people are typing...`;
+  }
+}
+
+function getObjectFromJsonData(data: Buffer) {
   return JSON.parse(data.toString())
 }

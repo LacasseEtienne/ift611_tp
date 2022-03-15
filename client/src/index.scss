@@ -20,8 +20,8 @@ html, body {
 	background: $chat-bg;
 	flex: 1;
 	flex-direction: column;
-  color: whitesmoke;
-  padding: 1rem 0;
+  	color: whitesmoke;
+  	padding: 1rem 0;
 	display: flex;
 
 	.messages
@@ -58,8 +58,18 @@ html, body {
 		display: flex;
 		.text-area-input
 		{
-			margin: 1rem;
+			margin: 0 1rem;
 			flex: 1;
+		}
+	}
+
+	.writing-notice-area
+	{
+		.writing 
+		{
+			margin: 0 1rem;
+			font-size: 0.7rem;
+			height: 0.3rem;
 		}
 	}
 }
@@ -69,14 +79,18 @@ html, body {
 	background: $users-bg;
 	flex: 0 0 16rem;
 	flex-direction: column;
-  color: lightgrey;
-  overflow-y: auto;
-  padding: 1rem 0;
+	color: lightgrey;
+	overflow-y: auto;
+	padding: 1rem 0;
 
-  ul
+  	ul
+	{
+		list-style: none;
+		.me 
 		{
-			list-style: none;
+			color: lightgreen;
 		}
+	}
 }
 
 .display-flex

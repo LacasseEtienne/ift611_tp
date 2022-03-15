@@ -18,6 +18,7 @@ socket.addEventListener('message', function (event) {
 
 function replaceUsers(users: string[]) {
   const aside = document.getElementById("users");
+  if (!aside) return;
   const ul = document.createElement("ul");
   users.forEach(user => {
     ul.append(createUser(user));
@@ -25,9 +26,12 @@ function replaceUsers(users: string[]) {
   aside.replaceChildren(ul);
 }
 
-function createUser(user: string): Node {
+function createUser(userName: string): Node {
   const li = document.createElement("li");
-  li.appendChild(document.createTextNode(user));
+  li.appendChild(document.createTextNode(userName));
+  if (userName === user.name) {
+    li.classList.add("me");
+  }
   return li;
 }
 
