@@ -1,5 +1,5 @@
 # Cassandra DB
-The DB run in a [Docker](https://www.docker.com) and uses the official [Cassandra Image](https://hub.docker.com/_/cassandra).
+The database runs in a [Docker container](https://www.docker.com) and uses the official [Cassandra Image](https://hub.docker.com/_/cassandra).
 
 ## Prerequisites
 You need to install [Docker](https://www.docker.com/get-started).
