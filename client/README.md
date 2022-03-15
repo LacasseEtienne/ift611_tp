@@ -9,7 +9,7 @@ It allows you to choose your username then you will be redirected to the chat pa
 You need to install [Node.js](https://nodejs.org/en/download/).
 We recommend that you use the latest `LTS` version available.
 
-The [server](../server) must be running before you start the client.
+The [server](../server/) must be running before you start the client.
 
 ## Pull depenencies
 ```zsh
