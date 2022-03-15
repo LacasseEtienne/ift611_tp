@@ -1,9 +1,10 @@
-# Install the dependencies
+# Server
+## Install the dependencies
 ```shell
 npm install
 ```
 
-# Start the server
+## Start the server
 ```shell
 npm start
 ```

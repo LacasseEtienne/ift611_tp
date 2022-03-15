@@ -1,12 +1,13 @@
-# Pull depenencies
+# Client
+## Pull depenencies
 ```zsh
 npm install
 ```
-# Run app in dev
+## Run app in dev
 ```zsh
 npm start
 ```
-# Package and distribute
+## Package and distribute
 ```zsh
 npm run make
 ```
