@@ -1,3 +1,5 @@
+# Deprecated
+
 # Install Boost (1.78.0)
 ## Windows
 1. Download Boost from [Boost Downloads](https://www.boost.org/users/download/)
