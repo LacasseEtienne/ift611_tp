@@ -18,15 +18,11 @@ function handleConnect(ws: My_ws, payload: { user: string }) {
 
 function handleNewMessage(ws: My_ws, payload: { text: string, perf: number }) {
     const { text, perf } = payload;
+    const messageID = uuidv4();
+    const messageTime = Date.now();
 
-    function addMessageToDB() {
-        const messageID = uuidv4();
-        const messageTime = Date.now();
-        insertIntoMessages(messageID, messageTime, ws.name, text);
-        broadcastMessage(ws.name, messageID, perf, text, messageTime);
-    }
-
-    addMessageToDB();
+    insertIntoMessages(messageID, messageTime, ws.name, text);
+    broadcastMessage(ws.name, messageID, perf, text, messageTime, ws.uuid);
 }
 
 function handleWriting(ws: My_ws) {

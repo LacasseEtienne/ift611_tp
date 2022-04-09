@@ -6,4 +6,8 @@ export const client = new Client({
     localDataCenter: 'datacenter1',
 });
 
-client.connect();
+client.connect()
+    .catch(err => console.error(err))
+    .then(_ => {
+        console.log('connected to cassandra');
+    });

@@ -10,7 +10,6 @@ export function loadWriting(parent: HTMLElement) {
 }
 
 function showWritingMessage(message: string) {
-    console.log(message);
     const writing = document.getElementById('writing');
     if (!writing) return;
     writing.innerText = message;

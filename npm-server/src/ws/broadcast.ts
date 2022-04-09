@@ -21,9 +21,9 @@ export function broadcastUpdateUsers() {
     });
 }
 
-export function broadcastMessage(name: string, uuid: string, perf: number, text: string, messageTime: number) {
+export function broadcastMessage(name: string, uuid: string, perf: number, text: string, messageTime: number, userId: string) {
     wss.clients.forEach((connection: My_ws) => {
-        connection.send(JSON.stringify({ type: 'message', name, uuid, perf, text, messageTime }));
+        connection.send(JSON.stringify({ type: 'message', name, uuid, perf, text, messageTime, userId }));
     })
 }
 
