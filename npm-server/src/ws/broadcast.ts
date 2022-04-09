@@ -1,6 +1,6 @@
 import { My_ws } from './types';
 import { wss } from './server';
-import { getUsers } from './user';
+import { getUsersName } from './user';
 
 function generateWritingMessage(writingUsers: string[], name: string) {
     const otherUsers = writingUsers.filter(u => u !== name);
@@ -17,7 +17,7 @@ function generateWritingMessage(writingUsers: string[], name: string) {
 
 export function broadcastUpdateUsers() {
     wss.clients.forEach((connection: My_ws) => {
-        connection.send(JSON.stringify({ type: 'updateUsers', users: getUsers() }));
+        connection.send(JSON.stringify({ type: 'updateUsers', users: getUsersName() }));
     });
 }
 

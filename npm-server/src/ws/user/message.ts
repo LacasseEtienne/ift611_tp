@@ -3,7 +3,6 @@ import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
 import { insertIntoMessages } from "../../db";
 import { broadcastMessage, broadcastUpdateUsers, broadcastWritingUsers } from "../broadcast";
-import { getUsers } from "./utils";
 
 const writingUsers: string[] = [];
 
@@ -13,7 +12,7 @@ function getObjectFromJsonData(data: WebSocket.RawData) {
 
 function handleConnect(ws: My_ws, payload: { user: string }) {
     ws.name = payload.user;
-    ws.send(JSON.stringify({ type: 'init', uuid: ws.uuid, users: getUsers() }));
+    ws.send(JSON.stringify({ type: 'init', uuid: ws.uuid }));
     broadcastUpdateUsers();
 }
 
