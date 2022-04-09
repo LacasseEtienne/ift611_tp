@@ -2,71 +2,66 @@ $chat-bg: #36393E;
 $message-hover-bg: #1e21249c;
 $users-bg: #1E2124;
 
-html, body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
-  margin: auto;
-  height: 100%;
+html,
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+		Arial, sans-serif;
+	margin: auto;
+	height: 100%;
 }
 
-.container
-{
+.container {
 	height: 100%;
 	display: flex;
 }
 
-.chat
-{
+.chat {
 	background: $chat-bg;
 	flex: 1;
 	flex-direction: column;
-  	color: whitesmoke;
-  	padding: 1rem 0;
+	color: whitesmoke;
+	padding: 1rem 0;
 	display: flex;
 
-	.messages
-	{
+	.messages {
 		overflow-y: auto;
 		flex: 1;
 
-		ul
-		{
+		ul {
 			list-style: none;
 			padding: 0;
 
-			.message-container
-			{
+			.message-container {
 				margin-bottom: 1rem;
-	
+
 				padding: 1rem;
-	
-				.message
-				{
+
+				.user {
+					color: lightgrey;
+				}
+
+				.message {
 					margin-top: 0.5rem;
 				}
 			}
 
-			.message-container:hover
-			{
+			.message-container:hover {
 				background-color: $message-hover-bg;
 			}
 		}
 	}
 
-	.text-area
-	{
+	.text-area {
 		display: flex;
-		.text-area-input
-		{
+
+		.text-area-input {
 			margin: 0 1rem;
 			flex: 1;
 		}
 	}
 
-	.writing-notice-area
-	{
-		.writing 
-		{
+	.writing-notice-area {
+		.writing {
 			margin: 0 1rem;
 			font-size: 0.7rem;
 			height: 0.3rem;
@@ -74,8 +69,7 @@ html, body {
 	}
 }
 
-.users
-{
+.users {
 	background: $users-bg;
 	flex: 0 0 16rem;
 	flex-direction: column;
@@ -83,17 +77,15 @@ html, body {
 	overflow-y: auto;
 	padding: 1rem 0;
 
-  	ul
-	{
+	ul {
 		list-style: none;
-		.me 
-		{
+
+		.me {
 			color: lightgreen;
 		}
 	}
 }
 
-.display-flex
-{
+.display-flex {
 	display: flex;
 }
