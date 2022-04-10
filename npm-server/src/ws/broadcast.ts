@@ -16,22 +16,22 @@ function generateWritingMessage(writingUsers: string[], name: string) {
 }
 
 export function broadcastUpdateUsers() {
-    wss.clients.forEach((connection: My_ws) => {
-        connection.send(JSON.stringify({ type: 'updateUsers', users: getUsersName() }));
+    wss.clients.forEach((client: My_ws) => {
+        client.send(JSON.stringify({ type: 'updateUsers', users: getUsersName() }));
     });
 }
 
 export function broadcastMessage(name: string, uuid: string, perf: number, text: string, messageTime: number, userId: string) {
-    wss.clients.forEach((connection: My_ws) => {
-        connection.send(JSON.stringify({ type: 'message', name, uuid, perf, text, messageTime, userId }));
+    wss.clients.forEach((client: My_ws) => {
+        client.send(JSON.stringify({ type: 'message', name, uuid, perf, text, messageTime, userId }));
     })
 }
 
 export function broadcastWritingUsers(writingUsers: string[]) {
-    wss.clients.forEach((connection: My_ws) => {
-        connection.send(JSON.stringify({
+    wss.clients.forEach((client: My_ws) => {
+        client.send(JSON.stringify({
             type: 'updateWriting',
-            message: generateWritingMessage(writingUsers, connection.name)
+            message: generateWritingMessage(writingUsers, client.name)
         }));
     });
 }
