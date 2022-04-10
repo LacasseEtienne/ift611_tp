@@ -3,41 +3,40 @@ import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
 import { insertIntoMessages } from "../../db";
 import { broadcastMessage, broadcastUpdateUsers, broadcastWritingUsers } from "../broadcast";
-
-const writingUsers: string[] = [];
+import { clients } from "../../client";
 
 function getObjectFromJsonData(data: WebSocket.RawData) {
     return JSON.parse(data.toString())
 }
 
 function handleConnect(ws: My_ws, payload: { user: string }) {
-    ws.name = payload.user;
-    ws.send(JSON.stringify({ type: 'init', uuid: ws.uuid }));
+    clients[ws.clientId] = {
+        ...clients[ws.clientId],
+        name: payload.user,
+        connected: true,
+    };
+    ws.send(JSON.stringify({ type: 'init', uuid: ws.clientId }));
     broadcastUpdateUsers();
 }
 
 function handleNewMessage(ws: My_ws, payload: { text: string, perf: number }) {
     const { text, perf } = payload;
+    const { name } = clients[ws.clientId];
     const messageID = uuidv4();
     const messageTime = Date.now();
 
-    insertIntoMessages(messageID, messageTime, ws.name, text);
-    broadcastMessage(ws.name, messageID, perf, text, messageTime, ws.uuid);
+    insertIntoMessages(messageID, messageTime, name, text);
+    broadcastMessage(name, messageID, perf, text, messageTime, ws.uuid);
 }
 
 function handleWriting(ws: My_ws) {
-    if (writingUsers.includes(ws.name)) return;
-
-    writingUsers.push(ws.name);
-    broadcastWritingUsers(writingUsers);
+    clients[ws.clientId].writing = true;
+    broadcastWritingUsers();
 }
 
 function handleStopWriting(ws: My_ws) {
-    const index = writingUsers.indexOf(ws.name);
-    if (index > -1) {
-        writingUsers.splice(index, 1);
-        broadcastWritingUsers(writingUsers);
-    }
+    clients[ws.clientId].writing = false;
+    broadcastWritingUsers();
 }
 
 const payloadHandler: {

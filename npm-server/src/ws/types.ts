@@ -1,3 +1,3 @@
 import WebSocket from 'ws';
 
-export type My_ws = WebSocket.WebSocket & { name: string, uuid: string };
+export type My_ws = WebSocket.WebSocket & { uuid: string, clientId: string };

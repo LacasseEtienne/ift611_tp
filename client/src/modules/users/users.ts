@@ -3,16 +3,16 @@ import { socket } from '../websocket';
 
 function connect(this: typeof user) {
   socket.addEventListener('message', function (event) {
-    const { type, users } = JSON.parse(event.data);
-    type === 'updateUsers' && replaceUsers(users);
+    const { type, payload } = JSON.parse(event.data);
+    type === 'updateUsers' && replaceUsers(payload.users);
   });
   socket.send(JSON.stringify({ type: 'connect', user: this.name }));
 }
 
 socket.addEventListener('message', function (event) {
-  const { type, uuid } = JSON.parse(event.data);
+  const { type, payload } = JSON.parse(event.data);
   if (type !== 'init') return;
-  user.uuid = uuid;
+  user.uuid = payload.uuid;
 });
 
 function replaceUsers(users: string[]) {
