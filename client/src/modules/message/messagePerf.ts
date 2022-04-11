@@ -1,7 +1,7 @@
 import { send } from "../websocket";
 
 const settings = {
-    threshold: 1,
+    threshold: 500,
 };
 
 export function checkPerf(sendTime: number, messageId: string, messageTime: number) {
