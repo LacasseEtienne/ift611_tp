@@ -27,8 +27,8 @@ export function getMessages(container: HTMLElement, containerEnd: HTMLElement) {
   socket.addEventListener('message', function (event) {
     const { type, payload } = JSON.parse(event.data);
     if (type !== 'message') return;
-    const { name, text, perf, userId } = payload;
+    const { name, text, perf, userId, uuid, messageTime } = payload;
     appendMessage(createMessage(name, text), container, containerEnd);
-    user.uuid === userId && checkPerf(perf);
+    user.uuid === userId && checkPerf(perf, uuid, messageTime);
   });
 }

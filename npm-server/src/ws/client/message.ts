@@ -1,32 +1,33 @@
 import { My_ws } from "../types";
 import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
-import { insertIntoMessages } from "../../db";
+import { getLastMessages, insertIntoMessages, updateMessageDelayExceeded } from "../../db";
 import { broadcastMessage, broadcastUpdateUsers, broadcastWritingUsers } from "../broadcast";
 import { clients } from "../../client";
+import { sendToClient } from "./communication";
+import { consoleColors } from "../../util";
 
 function getObjectFromJsonData(data: WebSocket.RawData) {
     return JSON.parse(data.toString())
 }
 
-function handleConnect(ws: My_ws, payload: { user: string }) {
+function handleConnect(ws: My_ws, { name }: { name: string }) {
     clients[ws.clientId] = {
         ...clients[ws.clientId],
-        name: payload.user,
+        name: name,
         connected: true,
     };
-    ws.send(JSON.stringify({ type: 'init', uuid: ws.clientId }));
+    sendToClient(ws, { type: 'init', payload: { uuid: ws.clientId } });
     broadcastUpdateUsers();
 }
 
-function handleNewMessage(ws: My_ws, payload: { text: string, perf: number }) {
-    const { text, perf } = payload;
+function handleNewMessage(ws: My_ws, { text, perf }: { text: string, perf: number }) {
     const { name } = clients[ws.clientId];
     const messageID = uuidv4();
     const messageTime = Date.now();
 
     insertIntoMessages(messageID, messageTime, name, text);
-    broadcastMessage(name, messageID, perf, text, messageTime, ws.uuid);
+    broadcastMessage(name, messageID, perf, text, messageTime, ws.clientId);
 }
 
 function handleWriting(ws: My_ws) {
@@ -39,19 +40,31 @@ function handleStopWriting(ws: My_ws) {
     broadcastWritingUsers();
 }
 
+function handleMessageDelayExceeded(_: My_ws, { messageId, messageTime }: { messageId: string, messageTime: number }) {
+    updateMessageDelayExceeded(messageId, messageTime).then(() => {
+        getLastMessages(100).then(messages => {
+            const numberOfMessagesDelayExceeded = messages.rows.filter(m => m.delay_exceeded).length;
+            const percentOfMessagesWhoExceeded = numberOfMessagesDelayExceeded / messages.rows.length;
+            if (percentOfMessagesWhoExceeded <= 0.05) return;
+            console.error(`${consoleColors.red}${percentOfMessagesWhoExceeded} messages exceed delay.${consoleColors.reset}`);
+        });
+    });
+}
+
 const payloadHandler: {
-    [key: string]: (ws: My_ws, payload: any) => void
+    [key: string]: (ws: My_ws, payload: unknown) => void
 } = {
     'connect': handleConnect,
     'message': handleNewMessage,
     'writing': handleWriting,
     'stopWriting': handleStopWriting,
+    'messageDelayExceeded': handleMessageDelayExceeded,
 };
 
 export function handleMessage(ws: My_ws) {
     ws.on('message', (data) => {
-        const payload: { type?: string } = getObjectFromJsonData(data);
-        if (!payload.type) return;
-        payloadHandler[payload.type](ws, payload);
+        const { type, payload } = getObjectFromJsonData(data);
+        if (!(type in payloadHandler)) return;
+        payloadHandler[type](ws, payload);
     });
 }

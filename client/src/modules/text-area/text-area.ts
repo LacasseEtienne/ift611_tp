@@ -1,18 +1,18 @@
 import textAreaHTML from './text-area.html';
-import { socket } from '../websocket';
+import { send } from '../websocket';
 
 function onKeydown(this: HTMLInputElement, e: KeyboardEvent) {
   if (e.key === 'Enter') {
-    socket.send(JSON.stringify({ type: 'message', text: this.value, perf: performance.now() }));
+    send({ type: 'message', payload: { text: this.value, perf: performance.now() } });
     this.value = '';
-  } 
+  }
 }
 
 function onKeyup(this: HTMLInputElement) {
   if (this.value == '') {
-    socket.send(JSON.stringify({ type: 'stopWriting' }));
-  } else {    
-    socket.send(JSON.stringify({ type: 'writing' }));
+    send({ type: 'stopWriting', payload: {} });
+  } else {
+    send({ type: 'writing', payload: {} });
   }
 }
 

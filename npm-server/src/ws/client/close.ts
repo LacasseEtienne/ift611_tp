@@ -7,5 +7,5 @@ export function handleClose(ws: My_ws) {
         removeClient(ws.clientId);
         //Notify all of the update of the users
         broadcastUpdateUsers();
-    })
+    });
 }

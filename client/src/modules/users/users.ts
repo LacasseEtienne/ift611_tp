@@ -1,12 +1,12 @@
 import usersHtml from './users.html';
-import { socket } from '../websocket';
+import { send, socket } from '../websocket';
 
 function connect(this: typeof user) {
   socket.addEventListener('message', function (event) {
     const { type, payload } = JSON.parse(event.data);
     type === 'updateUsers' && replaceUsers(payload.users);
   });
-  socket.send(JSON.stringify({ type: 'connect', user: this.name }));
+  send({ type: 'connect', payload: { name: this.name } });
 }
 
 socket.addEventListener('message', function (event) {
