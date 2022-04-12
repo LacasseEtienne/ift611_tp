@@ -18,6 +18,7 @@ export function handleConnection() {
             connected: false,
             writing: false,
             socket: ws,
+            perf: 0,
         };
 
         handleMessage(ws);

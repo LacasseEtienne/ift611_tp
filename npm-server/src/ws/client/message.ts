@@ -11,11 +11,12 @@ function getObjectFromJsonData(data: WebSocket.RawData) {
     return JSON.parse(data.toString())
 }
 
-function handleConnect(ws: My_ws, { name }: { name: string }) {
+function handleConnect(ws: My_ws, { name, perf }: { name: string, perf: number }) {
     clients[ws.clientId] = {
         ...clients[ws.clientId],
         name: name,
         connected: true,
+        perf,
     };
     sendToClient(ws, { type: 'init', payload: { uuid: ws.clientId } });
     broadcastUpdateUsers();

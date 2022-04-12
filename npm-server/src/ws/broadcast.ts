@@ -1,5 +1,5 @@
 import { wss } from './server';
-import { getWritingClients, getUsersName } from '../client';
+import { getWritingClients, getUsersInfo } from '../client';
 
 export function broadcast(message: { type: string, payload: any }) {
     const stringifiedMessage = JSON.stringify(message);
@@ -10,7 +10,7 @@ export function broadcastUpdateUsers() {
     broadcast({
         type: 'updateUsers',
         payload: {
-            users: getUsersName(),
+            users: getUsersInfo(),
         },
     });
 }
