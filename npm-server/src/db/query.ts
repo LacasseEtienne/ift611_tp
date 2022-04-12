@@ -1,7 +1,6 @@
 import { client } from './client';
-import { v4 as uuidv4 } from 'uuid';
 
-const serverId = uuidv4();
+const serverId = '85ad6edb-fdef-4636-aed7-7cd32acef06d';
 
 export function insertIntoMessages(id: string, timeSent: number, author: string, message: string) {
     const insertStatement = 'INSERT INTO messages(server_id, id, time_sent, author, message, delay_exceeded) VALUES (?, ?, ?, ?, ?, ?)';

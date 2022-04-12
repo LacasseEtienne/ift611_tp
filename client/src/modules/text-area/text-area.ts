@@ -1,5 +1,6 @@
 import textAreaHTML from './text-area.html';
 import { send } from '../websocket';
+import { user } from '../users';
 
 function onKeydown(this: HTMLInputElement, e: KeyboardEvent) {
   if (e.key === 'Enter') {
@@ -8,11 +9,31 @@ function onKeydown(this: HTMLInputElement, e: KeyboardEvent) {
   }
 }
 
+function sendStopWriting() {
+  console.log('sendStopWriting');
+  if (!user.writing) return;
+
+  send({ type: 'stopWriting', payload: {} });
+  setTimeout(() => {
+    sendStopWriting();
+  }, 500);
+}
+
+function sendWriting() {
+  console.log('sendWriting');
+  if (user.writing) return;
+
+  send({ type: 'writing', payload: {} });
+  setTimeout(() => {
+    sendWriting();
+  }, 500);
+}
+
 function onKeyup(this: HTMLInputElement) {
   if (this.value == '') {
-    send({ type: 'stopWriting', payload: {} });
+    sendStopWriting();
   } else {
-    send({ type: 'writing', payload: {} });
+    sendWriting();
   }
 }
 

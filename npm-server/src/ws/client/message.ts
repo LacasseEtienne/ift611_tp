@@ -46,7 +46,11 @@ function handleMessageDelayExceeded(_: My_ws, { messageId, messageTime }: { mess
             const numberOfMessagesDelayExceeded = messages.rows.filter(m => m.delay_exceeded).length;
             const percentOfMessagesWhoExceeded = numberOfMessagesDelayExceeded / messages.rows.length;
             if (percentOfMessagesWhoExceeded <= 0.05) return;
-            console.error(`${consoleColors.red}${percentOfMessagesWhoExceeded} messages exceed delay.${consoleColors.reset}`);
+            console.error(`${consoleColors.red}
+            ${numberOfMessagesDelayExceeded} messages out of
+            ${messages.rows.length}
+            exceed delay.
+            ${consoleColors.reset}`);
         });
     });
 }

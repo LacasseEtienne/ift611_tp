@@ -15,11 +15,16 @@ function generateWritingMessage(writingUsers: string[]) {
     }
 }
 
+function handleUpdateWriting(writingUsers: string[]) {
+    showWritingMessage(generateWritingMessage(writingUsers));
+    user.writing = writingUsers.includes(user.name);
+}
+
 export function loadWriting(parent: HTMLElement) {
     parent.insertAdjacentHTML('beforeend', writingHtml);
     socket.addEventListener('message', function (event) {
         const { type, payload } = JSON.parse(event.data);
-        type === 'updateWriting' && showWritingMessage(generateWritingMessage(payload.writingUsers));
+        type === 'updateWriting' && handleUpdateWriting(payload.writingUsers);
     });
 }
 

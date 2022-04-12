@@ -37,6 +37,7 @@ function createUser(userName: string): Node {
 export const user = {
   name: '',
   uuid: '',
+  writing: false,
   connect,
 };
 
