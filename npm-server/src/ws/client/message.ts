@@ -42,7 +42,7 @@ function handleStopWriting(ws: My_ws) {
 
 function handleMessageDelayExceeded(_: My_ws, { messageId, messageTime }: { messageId: string, messageTime: number }) {
     updateMessageDelayExceeded(messageId, messageTime).then(() => {
-        getLastMessages(100).then(messages => {
+        getLastMessages(1000).then(messages => {
             const numberOfMessagesDelayExceeded = messages.rows.filter(m => m.delay_exceeded).length;
             const percentOfMessagesWhoExceeded = numberOfMessagesDelayExceeded / messages.rows.length;
             if (percentOfMessagesWhoExceeded <= 0.05) return;

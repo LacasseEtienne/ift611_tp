@@ -11,9 +11,3 @@ message text,
 delay_exceeded boolean,
 PRIMARY KEY (server_id, time_sent, id)
 ) WITH CLUSTERING ORDER BY (time_sent DESC);
-
--- Insert some data
-INSERT INTO chatroom.messages (id, time_sent, author, message, delay_exceeded) 
-VALUES (uuid(), toTimestamp(now()), 'Étienne', 'Hello, world!', false);
-INSERT INTO chatroom.messages (id, time_sent, author, message, delay_exceeded)
-VALUES (uuid(), toTimestamp(now()), 'Benjamin', 'Goodbye', false);

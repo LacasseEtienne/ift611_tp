@@ -7,7 +7,7 @@ const settings = {
 export function checkPerf(sendTime: number, messageId: string, messageTime: number) {
     const delay = performance.now() - sendTime;
 
-    console.log(`Message ${messageId} was sent ${delay}ms ago.`);
+    // console.log(`Message ${messageId} was sent ${delay}ms ago.`);
 
     if (delay < settings.threshold) return;
 

@@ -10,7 +10,7 @@ function onKeydown(this: HTMLInputElement, e: KeyboardEvent) {
 }
 
 function sendStopWriting() {
-  console.log('sendStopWriting');
+  // console.log('sendStopWriting');
   if (!user.writing) return;
 
   send({ type: 'stopWriting', payload: {} });
@@ -20,7 +20,7 @@ function sendStopWriting() {
 }
 
 function sendWriting() {
-  console.log('sendWriting');
+  // console.log('sendWriting');
   if (user.writing) return;
 
   send({ type: 'writing', payload: {} });
